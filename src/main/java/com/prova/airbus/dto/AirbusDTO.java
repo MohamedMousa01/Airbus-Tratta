@@ -16,6 +16,8 @@ public class AirbusDTO {
 
     private Long id;
 
+
+
     @NotBlank(message = "{codice.notblank}")
     private String codice;
 
@@ -82,6 +84,8 @@ public class AirbusDTO {
         result.setDescrizione(airbusModel.getDescrizione());
         result.setDataInizioServizio(airbusModel.getDataInizioServizio());
         result.setNumeroPasseggeri(airbusModel.getNumeroPasseggeri());
+
+        result.setConSovrapposizioni(airbusModel.isConSovrapposizioni());
 
         if (includeTratte && airbusModel.getTratte() != null && !airbusModel.getTratte().isEmpty()) {
             result.setTratte(TrattaDTO.createTrattaDTOListFromModelList(

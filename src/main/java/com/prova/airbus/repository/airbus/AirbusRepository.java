@@ -12,7 +12,7 @@ import java.util.List;
 public interface AirbusRepository extends CrudRepository<Airbus, Long>,
         JpaRepository<Airbus,Long>, PagingAndSortingRepository<Airbus, Long>, JpaSpecificationExecutor<Airbus>, CostumAirbusRepository{
 
-    @Query("select a from Airbus a join fetch a.tratte")
+    @Query("select a from Airbus a left join fetch a.tratte")
     List<Airbus> findAllAirbusEager();
 
     @Query("from Airbus a left join fetch a.tratte where a.id = ?1")

@@ -30,6 +30,8 @@ public class Airbus {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "airbus")
     private Set<Tratta> tratte = new HashSet<>();
 
+    private boolean conSovrapposizioni;
+
     public Airbus(){}
 
     public Airbus(Long id, String codice, String descrizione, LocalDate dataInizioServizio, int numeroPasseggeri) {
@@ -94,5 +96,13 @@ public class Airbus {
 
     public void setTratte(Set<Tratta> tratte) {
         this.tratte = tratte;
+    }
+
+    public boolean isConSovrapposizioni() {
+        return conSovrapposizioni;
+    }
+
+    public void setConSovrapposizioni(boolean conSovrapposizioni) {
+        this.conSovrapposizioni = conSovrapposizioni;
     }
 }

@@ -84,4 +84,18 @@ public class AirbusController {
         return ResponseEntity.ok(risultatiDTO);
     }
 
+
+    @GetMapping("/operazione/listaAirbusConSovrapposizioni")
+    public ResponseEntity<List<AirbusDTO>> listaAirbusConSovrapposizioni() {
+        List<Airbus> airbusModels = airbusService.listaAirbusConSovrapposizioni();
+
+        // Convertiamo in DTO
+        // Se hai salvato l'info 'sovrapposizione' nel model (es. in un campo transient)
+        // passalo al DTO qui.
+        List<AirbusDTO> result = AirbusDTO.createAirbusDTOListFromModelList(airbusModels, false);
+
+        return ResponseEntity.ok(result);
+    }
+
+
 }

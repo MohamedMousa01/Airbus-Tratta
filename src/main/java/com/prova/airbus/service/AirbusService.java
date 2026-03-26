@@ -20,4 +20,6 @@ public interface AirbusService {
 
     List<Airbus> findByExample(Airbus example);
 
+    public List<Airbus> listaAirbusConSovrapposizioni();
+
 }
