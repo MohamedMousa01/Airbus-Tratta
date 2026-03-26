@@ -3,6 +3,7 @@ package com.prova.airbus.web.api.controller;
 import com.prova.airbus.dto.AirbusDTO;
 import com.prova.airbus.model.Airbus;
 import com.prova.airbus.service.AirbusService;
+import com.prova.airbus.web.api.exception.AirbusNotFoundException;
 import com.prova.airbus.web.api.exception.IdNotNullForInsertException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,15 @@ public class AirbusController {
 
     }
 
-//    @GetMapping("/{id}")
-//    public AirbusDTO findById()
+    @GetMapping("/{id}")
+    public ResponseEntity<AirbusDTO> findById( @PathVariable(value = "id", required = true) long id){
+
+        Airbus airbus = airbusService.caricaSingoloElementoEager(id);
+        if(airbus == null)
+            throw new AirbusNotFoundException("Airbus non trovato con id " +id);
+
+        AirbusDTO result = AirbusDTO.buildAirbusDTOFromModel(airbus, false);
+        return ResponseEntity.status(HttpStatus.FOUND).body(result);
+    }
 
 }
