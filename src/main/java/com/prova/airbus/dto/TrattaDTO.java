@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.prova.airbus.model.Stato;
 import com.prova.airbus.model.Tratta;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -22,18 +23,18 @@ public class TrattaDTO {
     @NotBlank(message = "{descrizione.notblank}")
     private String descrizione;
 
-    @NotBlank(message = "{data.notblank}")
+    @NotNull(message = "La data è obbligatoria")
     private LocalDate data;
 
-    @NotBlank(message = "{oraDecollo.notblank}")
+    @NotNull(message = "L'ora di decollo è obbligatoria")
     private LocalTime oraDecollo;
 
-    @NotBlank(message = "{oraAtterraggio.notblank}")
+    @NotNull(message = "L'ora di atterraggio è obbligatoria")
     private LocalTime oraAtterraggio;
 
     private Stato stato;
 
-    @NotBlank(message = "{airbus.notblank}")
+    @NotNull(message = "L'airbus è obbligatorio")
     @JsonIgnoreProperties(value = { "tratte" })
     private AirbusDTO airbusDTO;
 

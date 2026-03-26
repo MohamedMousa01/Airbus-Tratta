@@ -12,7 +12,7 @@ import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
-public class TrattaServiceImpl {
+public class TrattaServiceImpl implements TrattaService{
 
     @Autowired
     TrattaRepository repository;
