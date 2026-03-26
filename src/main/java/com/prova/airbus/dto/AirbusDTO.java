@@ -59,8 +59,12 @@ public class AirbusDTO {
     public Boolean getConSovrapposizioni() { return conSovrapposizioni; }
     public void setConSovrapposizioni(Boolean conSovrapposizioni) { this.conSovrapposizioni = conSovrapposizioni; }
 
-    // --- Metodi di Conversione ---
 
+
+    // --- Metodi di Conversione ---
+    public Airbus buildFilmModel() {
+        return new Airbus(this.id, this.codice, this.descrizione, this.dataInizioServizio,this.numeroPasseggeri);
+    }
     public static Airbus buildAirbusModelFromDTO(AirbusDTO airbusDTO) {
         Airbus result = new Airbus();
         result.setId(airbusDTO.getId());

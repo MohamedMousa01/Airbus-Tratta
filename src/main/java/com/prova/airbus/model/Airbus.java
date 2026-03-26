@@ -32,6 +32,14 @@ public class Airbus {
 
     public Airbus(){}
 
+    public Airbus(Long id, String codice, String descrizione, LocalDate dataInizioServizio, int numeroPasseggeri) {
+        this.id = id;
+        this.codice = codice;
+        this.descrizione = descrizione;
+        this.dataInizioServizio = dataInizioServizio;
+        this.numeroPasseggeri = numeroPasseggeri;
+    }
+
     public Airbus(String codice, String descrizione, LocalDate dataInizioServizio, int numeroPasseggeri, Set<Tratta> tratte) {
         this.codice = codice;
         this.descrizione = descrizione;

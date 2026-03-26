@@ -41,7 +41,7 @@ public class AirbusController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AirbusDTO> findById( @PathVariable(value = "id", required = true) long id){
+    public ResponseEntity<AirbusDTO> findById(  @PathVariable(value = "id", required = true) long id){
 
         Airbus airbus = airbusService.caricaSingoloElementoEager(id);
         if(airbus == null)
@@ -49,6 +49,19 @@ public class AirbusController {
 
         AirbusDTO result = AirbusDTO.buildAirbusDTOFromModel(airbus, false);
         return ResponseEntity.status(HttpStatus.FOUND).body(result);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<AirbusDTO> update(@Valid @RequestBody AirbusDTO airbusDTOInput, @PathVariable(value = "id", required = true) long id){
+
+        Airbus airbus = airbusService.caricaSingoloElementoEager(id);
+        if(airbus == null)
+            throw new AirbusNotFoundException("Airbus non trovato con id " +id);
+        airbusDTOInput.setId(airbus.getId());
+
+        AirbusDTO result = AirbusDTO.buildAirbusDTOFromModel(airbusService.aggiorna(airbusDTOInput.buildFilmModel()),false);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+
     }
 
 }
