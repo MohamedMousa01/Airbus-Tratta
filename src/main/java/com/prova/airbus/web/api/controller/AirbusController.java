@@ -59,9 +59,29 @@ public class AirbusController {
             throw new AirbusNotFoundException("Airbus non trovato con id " +id);
         airbusDTOInput.setId(airbus.getId());
 
-        AirbusDTO result = AirbusDTO.buildAirbusDTOFromModel(airbusService.aggiorna(airbusDTOInput.buildFilmModel()),false);
+        AirbusDTO result = AirbusDTO.buildAirbusDTOFromModel(airbusService.aggiorna(airbusDTOInput.buildAirbusModel()),false);
         return ResponseEntity.status(HttpStatus.OK).body(result);
 
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable(required = true) Long id) {
+        airbusService.rimuovi(id);
+    }
+
+
+
+    @PostMapping("/search")
+    public ResponseEntity<List<AirbusDTO>> search(@RequestBody AirbusDTO exampleDTO) {
+
+        Airbus exampleModel = AirbusDTO.buildAirbusModelFromDTO(exampleDTO);
+
+        List<Airbus> risultatiModel = airbusService.findByExample(exampleModel);
+
+        List<AirbusDTO> risultatiDTO = AirbusDTO.createAirbusDTOListFromModelList(risultatiModel, false);
+
+        return ResponseEntity.ok(risultatiDTO);
     }
 
 }

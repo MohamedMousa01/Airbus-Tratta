@@ -62,7 +62,7 @@ public class AirbusDTO {
 
 
     // --- Metodi di Conversione ---
-    public Airbus buildFilmModel() {
+    public Airbus buildAirbusModel() {
         return new Airbus(this.id, this.codice, this.descrizione, this.dataInizioServizio,this.numeroPasseggeri);
     }
     public static Airbus buildAirbusModelFromDTO(AirbusDTO airbusDTO) {
