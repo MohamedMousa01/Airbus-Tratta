@@ -6,6 +6,7 @@ import com.prova.airbus.model.Airbus;
 import com.prova.airbus.model.Tratta;
 import com.prova.airbus.service.TrattaService;
 import com.prova.airbus.web.api.exception.IdNotNullForInsertException;
+import com.prova.airbus.web.api.exception.TrattaNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,6 +42,62 @@ public class TrattaController {
 
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<TrattaDTO> findById(@PathVariable(value = "id", required = true) long id) {
 
+        Tratta trattaModel = trattaService.caricaSingoloElementoconAirbus(id);
+
+        if (trattaModel == null) {
+            throw new TrattaNotFoundException("Tratta non trovata con id: " + id);
+        }
+
+        TrattaDTO result = TrattaDTO.buildTrattaDTOFromModel(trattaModel, true);
+
+        return ResponseEntity.ok(result);
+    }
+
+
+    @PutMapping("/{id}")
+    public ResponseEntity<TrattaDTO> update(@Valid @RequestBody TrattaDTO trattaDTOInput, @PathVariable(value = "id", required = true) long id) {
+
+        Tratta trattaEsistente = trattaService.caricaSingoloElemento(id);
+        if (trattaEsistente == null) {
+            throw new TrattaNotFoundException("Tratta non trovata con id: " + id);
+        }
+
+        trattaDTOInput.setId(id);
+
+        Tratta trattaAggiornata = trattaService.aggiorna(trattaDTOInput.buildTrattaModel());
+        TrattaDTO result = TrattaDTO.buildTrattaDTOFromModel(trattaAggiornata, true);
+
+        return ResponseEntity.ok(result);
+    }
+
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable(required = true) Long id) {
+        trattaService.rimuovi(id);
+    }
+
+
+    @PostMapping("/search")
+    public ResponseEntity<List<TrattaDTO>> search(@RequestBody TrattaDTO exampleDTO) {
+
+        Tratta exampleModel = exampleDTO.buildTrattaModel();
+
+        List<Tratta> risultatiModel = trattaService.findByExample(exampleModel);
+
+        List<TrattaDTO> risultatiDTO = TrattaDTO.createTrattaDTOListFromModelList(risultatiModel, true);
+
+        return ResponseEntity.ok(risultatiDTO);
+    }
+
+
+    @GetMapping("/operazioni/concludiTratte")
+    public void concludiTratte(){
+        trattaService.concludiTratteAttive();
+
+    }
 
 }

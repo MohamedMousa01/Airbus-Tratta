@@ -131,6 +131,27 @@ public class TrattaDTO {
         return result;
     }
 
+    public Tratta buildTrattaModel() {
+        // 1. Creiamo l'oggetto Tratta con i campi semplici
+        Tratta result = new Tratta(
+                this.id,
+                this.codice,
+                this.descrizione,
+                this.data,
+                this.oraDecollo,
+                this.oraAtterraggio,
+                this.stato
+        );
+
+        // 2. Fondamentale: se nel DTO c'è un Airbus associato,
+        // dobbiamo passarlo al Model per non perdere il legame nel DB
+        if (this.airbusDTO != null) {
+            result.setAirbus(this.airbusDTO.buildAirbusModel());
+        }
+
+        return result;
+    }
+
 
     public static TrattaDTO buildTrattaDTOFromModel(Tratta trattaModel, boolean includeAirbus) {
         TrattaDTO result = new TrattaDTO();

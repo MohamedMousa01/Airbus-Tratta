@@ -1,6 +1,7 @@
 package com.prova.airbus.service;
 
 import com.prova.airbus.model.Airbus;
+import com.prova.airbus.model.Stato;
 import com.prova.airbus.model.Tratta;
 import com.prova.airbus.repository.tratta.TrattaRepository;
 import com.prova.airbus.web.api.exception.TrattaNotFoundException;
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -41,9 +44,26 @@ public class TrattaServiceImpl implements TrattaService{
         repository.deleteById(idToRemove);
     }
 
+    @Transactional
     public List<Tratta> findByExample(Tratta example) {
 
         return repository.findByExample(example);
     }
+
+    @Transactional
+    public void concludiTratteAttive(){
+        List<Tratta> tratteAttive = repository.findActive();
+        LocalDateTime adesso = LocalDateTime.now();
+
+        for (Tratta trattaItem : tratteAttive) {
+            LocalDateTime momentoAtterraggio = LocalDateTime.of(trattaItem.getData(), trattaItem.getOraAtterraggio());
+
+            if (momentoAtterraggio.isBefore(adesso)) {
+                trattaItem.setStato(Stato.CONCLUSA);
+            }
+        }
+    }
+
+
 
 }

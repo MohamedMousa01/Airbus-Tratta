@@ -9,9 +9,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
+import java.util.List;
+
 public interface TrattaRepository extends CrudRepository<Tratta, Long>,
         JpaRepository<Tratta,Long>, PagingAndSortingRepository<Tratta, Long>, JpaSpecificationExecutor<Tratta>, CostumTrattaRepository {
 
     @Query("from Tratta t left join fetch t.airbus where t.id=?1")
     Tratta findByIdEager(Long idAirbus);
+
+    @Query("select t from Tratta t where t.stato = 'ATTIVA'")
+    List<Tratta> findActive();
 }
