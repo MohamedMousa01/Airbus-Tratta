@@ -19,7 +19,7 @@ public class Airbus {
     private String codice;
 
     @Column(name = "descrizione")
-    private Long descrizione;
+    private String descrizione;
 
     @Column(name = "dataInizioServizio")
     private LocalDate dataInizioServizio;
@@ -32,7 +32,7 @@ public class Airbus {
 
     public Airbus(){}
 
-    public Airbus(String codice, Long descrizione, LocalDate dataInizioServizio, int numeroPasseggeri, Set<Tratta> tratte) {
+    public Airbus(String codice, String descrizione, LocalDate dataInizioServizio, int numeroPasseggeri, Set<Tratta> tratte) {
         this.codice = codice;
         this.descrizione = descrizione;
         this.dataInizioServizio = dataInizioServizio;
@@ -56,11 +56,11 @@ public class Airbus {
         this.codice = codice;
     }
 
-    public Long getDescrizione() {
+    public String getDescrizione() {
         return descrizione;
     }
 
-    public void setDescrizione(Long descrizione) {
+    public void setDescrizione(String descrizione) {
         this.descrizione = descrizione;
     }
 
